@@ -1,0 +1,80 @@
+#pull the docker image from mysql hub
+docker pull mysql
+Using default tag: latest
+latest: Pulling from library/mysql
+Digest: sha256:3d7ae561cf6095f6aca8eb7830e1d14734227b1fb4748092f2be2cfbccf7d614
+Status: Image is up to date for mysql:latest
+docker.io/library/mysql:latest
+------------------------------------------------------------------------------------
+#run the mysql container
+docker run --name mySQLservice -e MYSQL_ROOT_PASSWORD=root -d mysql
+------------------------------------------------------------------------------------
+#for checking container
+docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED        STATUS          PORTS                 NAMES
+e71f8447f020   a3a2968869cf   "docker-entrypoint.s…"   22 hours ago   Up 25 minutes   3306/tcp, 33060/tcp   mySQLservice
+c24269dcfc25   mongo:latest   "docker-entrypoint.s…"   23 hours ago   Up 25 minutes   27017/tcp             mongo-container
+------------------------------------------------------------------------------------
+#execute the mongo terminal
+docker exec -it mySQLservice bash
+------------------------------------------------------------------------------------
+#after execute the mysql terminal
+bash-4.4# mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+------------------------------------------------------------------------------------
+#create a data base "Ashwani"
+mysql> create database abcd;
+Query OK, 1 row affected (0.02 sec)
+------------------------------------------------------------------------------------
+mysql> use abcd;
+Database changed
+------------------------------------------------------------------------------------
+#create a table in the above database
+mysql> create table users(username varchar(100),address varchar(200),phonenumber int,email varchar(100));
+Query OK, 0 rows affected (0.05 sec)
+------------------------------------------------------------------------------------
+#show the database whether it is created or not
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| abcd               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+------------------------------------------------------------------------------------
+#show the table
+mysql> show tables;
++----------------+
+| Tables_in_abcd |
++----------------+
+| users          |
++----------------+
+1 row in set (0.00 sec)
+------------------------------------------------------------------------------------
+#insert customer name ,age ,email , phoneNo , and address in customer collection
+mysql>  insert into users values("Ashwani Rajput","Bijnor Up",47292648,"ashwani@outlook.com");
+Query OK, 1 row affected (0.04 sec)
+------------------------------------------------------------------------------------
+#show the data which is insert into above database
+mysql> select * from users;
++----------------+-----------+-------------+---------------------+
+| username       | address   | phonenumber | email               |
++----------------+-----------+-------------+---------------------+
+| Ashwani Rajput | Bijnor Up |    47292648 | ashwani@outlook.com |
++----------------+-----------+-------------+---------------------+
+1 row in set (0.00 sec)
